@@ -1,12 +1,12 @@
-FROM node:10-alpine
+FROM node:19.5.0-alpine
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN addgroup app && adduser -S -G app app
 
-WORKDIR /home/node/app
+USER app
 
-COPY package*.json ./
+WORKDIR /app
 
-USER node
+COPY --chown=app:node package*.json .
 
 RUN npm install
 
